@@ -1,6 +1,11 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Managed by Viana Kit — do not modify this file directly.
+// Run `npx viana-kit update AppSelect` to get the latest version.
+// ─────────────────────────────────────────────────────────────────────────────
+
 "use client"
 
-import { cn } from "../../lib/utils"
+import { cn } from "@/lib/utils"
 import {
   Select,
   SelectContent,

@@ -1,6 +1,11 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Managed by Viana Kit — do not modify this file directly.
+// Run `npx viana-kit update AppDialog` to get the latest version.
+// ─────────────────────────────────────────────────────────────────────────────
+
 "use client"
 
-import { cn } from "../../lib/utils"
+import { cn } from "@/lib/utils"
 import {
   Dialog,
   DialogContent,
@@ -20,8 +25,8 @@ function AppDialog({ children, ...props }: AppDialogProps) {
   return <Dialog {...props}>{children}</Dialog>
 }
 
-function AppDialogTrigger({ children }: { children: React.ReactNode }) {
-  return <DialogTrigger>{children}</DialogTrigger>
+function AppDialogTrigger({ children, asChild, ...props }: React.ComponentProps<typeof DialogTrigger>) {
+  return <DialogTrigger asChild={asChild} {...props}>{children}</DialogTrigger>
 }
 
 function AppDialogContent({ className, children, ...props }: React.ComponentPropsWithoutRef<typeof DialogContent>) {

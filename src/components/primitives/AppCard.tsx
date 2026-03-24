@@ -1,6 +1,6 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // Managed by Viana Kit — do not modify this file directly.
-// Run `npx viana-kit update card` to get the latest version.
+// Run `npx viana-kit update AppCard` to get the latest version.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { cn } from "@/lib/utils"
@@ -12,7 +12,7 @@ import {
   CardAction,
   CardDescription,
   CardContent,
-} from "@/components/ui/card"
+} from "../ui/card"
 
 function AppCard({ className, ...props }: React.ComponentProps<typeof Card>) {
   return <Card className={cn("rounded-md", className)} {...props} />

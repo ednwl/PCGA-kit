@@ -1,9 +1,15 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Managed by Viana Kit — do not modify this file directly.
+// Run `npx viana-kit update popover` to get the latest version.
+// ─────────────────────────────────────────────────────────────────────────────
+
+
 "use client"
 
 import * as React from "react"
 import * as PopoverPrimitive from "@radix-ui/react-popover"
 
-import { cn } from "../../lib/utils"
+import { cn } from "@/lib/utils"
 
 const Popover = PopoverPrimitive.Root
 

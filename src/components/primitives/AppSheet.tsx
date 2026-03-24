@@ -1,6 +1,11 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Managed by Viana Kit — do not modify this file directly.
+// Run `npx viana-kit update AppSheet` to get the latest version.
+// ─────────────────────────────────────────────────────────────────────────────
+
 "use client"
 
-import { cn } from "../../lib/utils"
+import { cn } from "@/lib/utils"
 import {
   Sheet,
   SheetContent,
@@ -14,8 +19,8 @@ function AppSheet({ children, ...props }: React.ComponentProps<typeof Sheet>) {
   return <Sheet {...props}>{children}</Sheet>
 }
 
-function AppSheetTrigger({ children }: { children: React.ReactNode }) {
-  return <SheetTrigger>{children}</SheetTrigger>
+function AppSheetTrigger({ children, asChild, ...props }: React.ComponentProps<typeof SheetTrigger>) {
+  return <SheetTrigger asChild={asChild} {...props}>{children}</SheetTrigger>
 }
 
 function AppSheetContent({ className, children, ...props }: React.ComponentPropsWithoutRef<typeof SheetContent>) {

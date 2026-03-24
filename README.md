@@ -52,6 +52,19 @@ export function Example() {
 }
 ```
 
+## Important: Do Not Modify UI Components
+
+The `components/ui/` directory contains shadcn/ui primitives managed by Viana Kit. Do not modify these files directly. Instead, wrap them in your own components:
+
+```tsx
+// Correct — create your own wrapper
+import { AppButton } from "@/components/primitives/AppButton"
+
+export function MyButton(props) {
+  return <AppButton {...props} className="my-custom-style" />
+}
+```
+
 ## Tech Stack
 
 - Next.js 16

@@ -1,10 +1,10 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // Managed by Viana Kit — do not modify this file directly.
-// Run `npx viana-kit update badge` to get the latest version.
+// Run `npx viana-kit update AppBadge` to get the latest version.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { cn } from "@/lib/utils"
-import { Badge, badgeVariants } from "@/components/ui/badge"
+import { Badge, badgeVariants } from "../ui/badge"
 import type { VariantProps } from "class-variance-authority"
 
 type AppBadgeProps = React.ComponentProps<typeof Badge> &
