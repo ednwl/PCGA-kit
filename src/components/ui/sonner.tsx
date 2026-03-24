@@ -1,10 +1,10 @@
 "use client"
 
-import { Toaster as AppSonnerToaster, toast as appToast } from "sonner"
+import { Toaster as SonnerToaster } from "sonner"
 
-const AppToaster = () => {
+export function Toaster() {
   return (
-    <AppSonnerToaster
+    <SonnerToaster
       className="toaster group"
       toastOptions={{
         classNames: {
@@ -21,4 +21,4 @@ const AppToaster = () => {
   )
 }
 
-export { AppToaster, appToast as toast }
+export { toast } from "sonner"
