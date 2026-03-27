@@ -1,11 +1,5 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// Managed by Viana Kit — do not modify this file directly.
-// Run `npx viana-kit update AppDialog` to get the latest version.
-// ─────────────────────────────────────────────────────────────────────────────
-
 "use client"
 
-import { cn } from "@/lib/utils"
 import {
   Dialog,
   DialogContent,
@@ -14,6 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog"
+import { cn } from "@/lib/utils"
 
 type AppDialogProps = {
   children: React.ReactNode
@@ -25,24 +20,24 @@ function AppDialog({ children, ...props }: AppDialogProps) {
   return <Dialog {...props}>{children}</Dialog>
 }
 
-function AppDialogTrigger({ children, asChild, ...props }: React.ComponentProps<typeof DialogTrigger>) {
-  return <DialogTrigger asChild={asChild} {...props}>{children}</DialogTrigger>
+function AppDialogTrigger(props: React.ComponentProps<typeof DialogTrigger>) {
+  return <DialogTrigger {...props} />
 }
 
-function AppDialogContent({ className, children, ...props }: React.ComponentPropsWithoutRef<typeof DialogContent>) {
-  return <DialogContent className={cn("rounded-md", className)} {...props}>{children}</DialogContent>
+function AppDialogContent({ className, ...props }: React.ComponentPropsWithoutRef<typeof DialogContent>) {
+  return <DialogContent className={cn("rounded-md", className)} {...props} />
 }
 
-function AppDialogHeader({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <DialogHeader className={cn("rounded-md", className)} {...props} />
+function AppDialogHeader(props: React.HTMLAttributes<HTMLDivElement>) {
+  return <DialogHeader {...props} />
 }
 
-function AppDialogTitle({ className, ...props }: React.ComponentPropsWithoutRef<typeof DialogTitle>) {
-  return <DialogTitle className={cn("rounded-md", className)} {...props} />
+function AppDialogTitle(props: React.ComponentPropsWithoutRef<typeof DialogTitle>) {
+  return <DialogTitle {...props} />
 }
 
-function AppDialogDescription({ className, ...props }: React.ComponentPropsWithoutRef<typeof DialogDescription>) {
-  return <DialogDescription className={cn("rounded-md", className)} {...props} />
+function AppDialogDescription(props: React.ComponentPropsWithoutRef<typeof DialogDescription>) {
+  return <DialogDescription {...props} />
 }
 
 export {

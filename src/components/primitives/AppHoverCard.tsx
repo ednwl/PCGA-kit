@@ -1,23 +1,22 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// Managed by Viana Kit — do not modify this file directly.
-// Run `npx viana-kit update AppHoverCard` to get the latest version.
-// ─────────────────────────────────────────────────────────────────────────────
-
 "use client"
 
 import { cn } from "@/lib/utils"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card"
 
-function AppHoverCard({ children, ...props }: React.ComponentProps<typeof HoverCard>) {
-  return <HoverCard {...props}>{children}</HoverCard>
+function AppHoverCard(props: React.ComponentProps<typeof HoverCard>) {
+  return <HoverCard {...props} />
 }
 
 function AppHoverCardTrigger({ children }: { children: React.ReactNode }) {
   return <HoverCardTrigger>{children}</HoverCardTrigger>
 }
 
-function AppHoverCardContent({ className, ...props }: React.ComponentPropsWithoutRef<typeof HoverCardContent>) {
-  return <HoverCardContent className={cn("rounded-md", className)} {...props} />
-}
+function AppHoverCardContent({ className,
+  ...props }:
+  React.ComponentPropsWithoutRef<typeof 
+  HoverCardContent>) {
+    return <HoverCardContent 
+  className={cn("px-2 py-1 drop-shadow-xl shadow-none", className)} {...props} />
+  }
 
 export { AppHoverCard, AppHoverCardTrigger, AppHoverCardContent }

@@ -1,11 +1,5 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// Managed by Viana Kit — do not modify this file directly.
-// Run `npx viana-kit update AppNavigationMenu` to get the latest version.
-// ─────────────────────────────────────────────────────────────────────────────
-
 "use client"
 
-import { cn } from "@/lib/utils"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -18,36 +12,36 @@ import {
   navigationMenuTriggerStyle,
 } from "../ui/navigation-menu"
 
-function AppNavigationMenu({ className, ...props }: React.ComponentProps<typeof NavigationMenu>) {
-  return <NavigationMenu className={cn("rounded-md", className)} {...props} />
+function AppNavigationMenu(props: React.ComponentProps<typeof NavigationMenu>) {
+  return <NavigationMenu {...props} />
 }
 
-function AppNavigationMenuList({ className, ...props }: React.ComponentProps<typeof NavigationMenuList>) {
-  return <NavigationMenuList className={cn("rounded-md", className)} {...props} />
+function AppNavigationMenuList(props: React.ComponentProps<typeof NavigationMenuList>) {
+  return <NavigationMenuList {...props} />
 }
 
-function AppNavigationMenuItem({ className, ...props }: React.ComponentProps<typeof NavigationMenuItem>) {
-  return <NavigationMenuItem className={cn("rounded-md", className)} {...props} />
+function AppNavigationMenuItem(props: React.ComponentProps<typeof NavigationMenuItem>) {
+  return <NavigationMenuItem {...props} />
 }
 
-function AppNavigationMenuTrigger({ className, ...props }: React.ComponentProps<typeof NavigationMenuTrigger>) {
-  return <NavigationMenuTrigger className={cn(navigationMenuTriggerStyle(), className)} {...props} />
+function AppNavigationMenuTrigger(props: React.ComponentProps<typeof NavigationMenuTrigger>) {
+  return <NavigationMenuTrigger {...props} />
 }
 
-function AppNavigationMenuContent({ className, ...props }: React.ComponentProps<typeof NavigationMenuContent>) {
-  return <NavigationMenuContent className={cn("rounded-md", className)} {...props} />
+function AppNavigationMenuContent(props: React.ComponentProps<typeof NavigationMenuContent>) {
+  return <NavigationMenuContent {...props} />
 }
 
-function AppNavigationMenuLink({ className, ...props }: React.ComponentProps<typeof NavigationMenuLink>) {
-  return <NavigationMenuLink className={cn("rounded-md", className)} {...props} />
+function AppNavigationMenuLink(props: React.ComponentProps<typeof NavigationMenuLink>) {
+  return <NavigationMenuLink {...props} />
 }
 
-function AppNavigationMenuIndicator({ className, ...props }: React.ComponentProps<typeof NavigationMenuIndicator>) {
-  return <NavigationMenuIndicator className={cn("rounded-md", className)} {...props} />
+function AppNavigationMenuIndicator(props: React.ComponentProps<typeof NavigationMenuIndicator>) {
+  return <NavigationMenuIndicator {...props} />
 }
 
-function AppNavigationMenuViewport({ className, ...props }: React.ComponentProps<typeof NavigationMenuViewport>) {
-  return <NavigationMenuViewport className={cn("rounded-md", className)} {...props} />
+function AppNavigationMenuViewport(props: React.ComponentProps<typeof NavigationMenuViewport>) {
+  return <NavigationMenuViewport {...props} />
 }
 
 export {

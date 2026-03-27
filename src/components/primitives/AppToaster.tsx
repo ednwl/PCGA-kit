@@ -5,7 +5,6 @@ import { Toaster as AppSonnerToaster, toast as appToast } from "sonner"
 const AppToaster = () => {
   return (
     <AppSonnerToaster
-      className="toaster group"
       toastOptions={{
         classNames: {
           toast:

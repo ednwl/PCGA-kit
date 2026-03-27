@@ -1,29 +1,23 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// Managed by Viana Kit — do not modify this file directly.
-// Run `npx viana-kit update AppTooltip` to get the latest version.
-// ─────────────────────────────────────────────────────────────────────────────
-
 "use client"
 
-import { cn } from "@/lib/utils"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
 
 function AppTooltipProvider({ children }: { children: React.ReactNode }) {
   return <TooltipProvider>{children}</TooltipProvider>
 }
 
-function AppTooltip({ children, ...props }: React.ComponentProps<typeof Tooltip>) {
-  return <Tooltip {...props}>{children}</Tooltip>
+function AppTooltip(props: React.ComponentProps<typeof Tooltip>) {
+  return <Tooltip {...props} />
 }
 
-function AppTooltipTrigger({ children, ...props }: React.ComponentProps<typeof TooltipTrigger>) {
-  return <TooltipTrigger {...props}>{children}</TooltipTrigger>
+function AppTooltipTrigger(props: React.ComponentProps<typeof TooltipTrigger>) {
+  return <TooltipTrigger {...props} />
 }
 
-function AppTooltipContent({ className, children, ...props }: React.ComponentPropsWithoutRef<typeof TooltipContent>) {
+function AppTooltipContent(props: React.ComponentPropsWithoutRef<typeof TooltipContent>) {
   return (
-    <TooltipContent className={cn("rounded-md", className)} {...props}>
-      {children}
+    <TooltipContent {...props}>
+      {props.children}
     </TooltipContent>
   )
 }

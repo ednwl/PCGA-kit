@@ -50,15 +50,25 @@ import { AppButton } from "@/components/primitives/AppButton"
 | Component | Export(s) |
 |-----------|-----------|
 | **AppAccordion** | `AppAccordion`, `AppAccordionItem`, `AppAccordionTrigger`, `AppAccordionContent` |
+| **AppAlert** | `AppAlert`, `AppAlertTitle`, `AppAlertDescription` |
+| **AppAlertDialog** | `AppAlertDialog`, `AppAlertDialogTrigger`, `AppAlertDialogContent`, `AppAlertDialogHeader`, `AppAlertDialogFooter`, `AppAlertDialogTitle`, `AppAlertDialogDescription`, `AppAlertDialogAction`, `AppAlertDialogCancel` |
+| **AppAspectRatio** | `AppAspectRatio` |
 | **AppAvatar** | `AppAvatar`, `AppAvatarImage`, `AppAvatarFallback` |
 | **AppBadge** | `AppBadge` |
-| **AppBreadcrumb** | `AppBreadcrumb`, `AppBreadcrumbList`, `AppBreadcrumbItem`, `AppBreadcrumbLink`, `AppBreadcrumbPage`, `AppBreadcrumbSeparator` |
+| **AppBreadcrumb** | `AppBreadcrumb`, `AppBreadcrumbList`, `AppBreadcrumbItem`, `AppBreadcrumbLink`, `AppBreadcrumbPage`, `AppBreadcrumbSeparator`, `AppBreadcrumbEllipsis` |
 | **AppButton** | `AppButton` |
+| **AppButtonGroup** | `AppButtonGroup` |
 | **AppCalendar** | `AppCalendar` |
 | **AppCard** | `AppCard`, `AppCardHeader`, `AppCardTitle`, `AppCardDescription`, `AppCardAction`, `AppCardContent`, `AppCardFooter` |
 | **AppCheckbox** | `AppCheckbox` |
+| **AppCollapsible** | `AppCollapsible`, `AppCollapsibleTrigger`, `AppCollapsibleContent` |
 | **AppCommand** | `AppCommand`, `AppCommandDialog`, `AppCommandInput`, `AppCommandList`, `AppCommandEmpty`, `AppCommandGroup`, `AppCommandItem`, `AppCommandShortcut`, `AppCommandSeparator` |
-| **AppDialog** | `AppDialog`, `AppDialogTrigger`, `AppDialogContent`, `AppDialogHeader`, `AppDialogTitle`, `AppDialogDescription` |
+| **AppContextMenu** | `AppContextMenu`, `AppContextMenuTrigger`, `AppContextMenuContent`, `AppContextMenuItem`, `AppContextMenuSeparator`, `AppContextMenuLabel` |
+| **AppDialog** | `AppDialog`, `AppDialogTrigger`, `AppDialogContent`, `AppDialogHeader`, `AppDialogTitle`, `AppDialogDescription`, `AppDialogFooter`, `AppDialogClose` |
+| **AppDrawer** | `AppDrawer`, `AppDrawerTrigger`, `AppDrawerContent`, `AppDrawerHeader`, `AppDrawerTitle`, `AppDrawerDescription`, `AppDrawerFooter`, `AppDrawerClose` |
+| **AppDropdownMenu** | `AppDropdownMenu`, `AppDropdownMenuTrigger`, `AppDropdownMenuContent`, `AppDropdownMenuItem`, `AppDropdownMenuSeparator`, `AppDropdownMenuLabel`, `AppDropdownMenuCheckboxItem`, `AppDropdownMenuRadioGroup`, `AppDropdownMenuRadioItem`, `AppDropdownMenuSub`, `AppDropdownMenuSubTrigger`, `AppDropdownMenuSubContent`, `AppDropdownMenuShortcut` |
+| **AppField** | `AppField`, `AppFieldLabel`, `AppFieldDescription`, `AppFieldError` |
+| **AppForm** | `AppForm`, `AppFormField`, `AppFormItem`, `AppFormLabel`, `AppFormControl`, `AppFormDescription`, `AppFormMessage` |
 | **AppHoverCard** | `AppHoverCard`, `AppHoverCardTrigger`, `AppHoverCardContent` |
 | **AppInput** | `AppInput` |
 | **AppLabel** | `AppLabel` |
@@ -68,15 +78,20 @@ import { AppButton } from "@/components/primitives/AppButton"
 | **AppProgress** | `AppProgress` |
 | **AppRadioGroup** | `AppRadioGroup`, `AppRadioGroupItem` |
 | **AppScrollArea** | `AppScrollArea`, `AppScrollBar` |
-| **AppSelect** | `AppSelect`, `AppSelectTrigger`, `AppSelectValue`, `AppSelectContent`, `AppSelectItem`, `AppSelectLabel` |
+| **AppScrollText** | `AppScrollText` |
+| **AppSelect** | `AppSelect`, `AppSelectTrigger`, `AppSelectValue`, `AppSelectContent`, `AppSelectItem`, `AppSelectLabel`, `AppSelectSeparator` |
 | **AppSeparator** | `AppSeparator` |
-| **AppSheet** | `AppSheet`, `AppSheetTrigger`, `AppSheetContent`, `AppSheetHeader`, `AppSheetTitle`, `AppSheetDescription` |
+| **AppSheet** | `AppSheet`, `AppSheetTrigger`, `AppSheetContent`, `AppSheetHeader`, `AppSheetTitle`, `AppSheetDescription`, `AppSheetFooter`, `AppSheetClose` |
 | **AppSkeleton** | `AppSkeleton` |
+| **AppSpinner** | `AppSpinner` |
 | **AppSwitch** | `AppSwitch` |
 | **AppTable** | `AppTable`, `AppTableHeader`, `AppTableBody`, `AppTableFooter`, `AppTableHead`, `AppTableRow`, `AppTableCell`, `AppTableCaption` |
 | **AppTabs** | `AppTabs`, `AppTabsList`, `AppTabsTrigger`, `AppTabsContent` |
 | **AppTextarea** | `AppTextarea` |
+| **AppToast** | `useAppToast`, `toast` |
+| **AppToaster** | `AppToaster`, `sonnerToast` |
 | **AppToggle** | `AppToggle` |
+| **AppToggleGroup** | `AppToggleGroup`, `AppToggleGroupItem` |
 | **AppTooltip** | `AppTooltip`, `AppTooltipProvider`, `AppTooltipTrigger`, `AppTooltipContent` |
 
 ---
@@ -181,15 +196,19 @@ export function PrimaryActionButton({ className, children, ...props }: PrimaryAc
 Viana Kit uses **Tailwind CSS v4** with design tokens as CSS variables.
 
 **Do:**
-- Use Tailwind utility classes for all styling
+- Use Tailwind utility classes for all layout and spacing
 - Use semantic token classes: `bg-background`, `text-foreground`, `text-muted-foreground`, `border-border`, `bg-primary`, `text-primary-foreground`, etc.
 - Use `cn()` to conditionally merge classes
 
-**Do not:**
-- Write inline `style={{}}` objects
-- Use hardcoded hex/rgb/hsl values in classes — always use token-mapped classes
-- Add custom CSS outside of `globals.css`
-- Import or extend Tailwind config — tokens are in `globals.css` under `@theme inline`
+**Do NOT — strictly enforced:**
+- ❌ Set `font-family` — the system font stack is managed by the token layer
+- ❌ Set raw color values (`text-[#fff]`, `bg-[#3b82f6]`, `text-blue-500`) — always use semantic token classes
+- ❌ Set raw `font-size` values (`text-[13px]`, `text-[1.1rem]`) — use Tailwind scale (`text-sm`, `text-base`, `text-lg`, etc.)
+- ❌ Write inline `style={{}}` objects for any visual property
+- ❌ Use hardcoded hex/rgb/hsl values in className — always use token-mapped classes
+- ❌ Add custom CSS outside of `globals.css`
+- ❌ Import or extend Tailwind config — tokens are in `globals.css` under `@theme inline`
+- ❌ Override spacing, radius, or shadow with arbitrary values when a Tailwind scale value exists
 
 ### Available semantic tokens (as Tailwind classes)
 
@@ -202,13 +221,91 @@ Viana Kit uses **Tailwind CSS v4** with design tokens as CSS variables.
 | primary | `bg-primary` / `text-primary` | Brand color, primary actions |
 | primary-foreground | `text-primary-foreground` | Text on primary backgrounds |
 | secondary | `bg-secondary` | Lower-emphasis backgrounds |
+| secondary-foreground | `text-secondary-foreground` | Text on secondary backgrounds |
 | accent | `bg-accent` | Hover states, highlights |
+| accent-foreground | `text-accent-foreground` | Text on accent backgrounds |
 | destructive | `bg-destructive` / `text-destructive` | Errors, delete actions |
 | border | `border-border` | All borders |
-| input | `bg-input` | Input field backgrounds |
+| input | `bg-input` / `border-input` | Input field backgrounds and borders |
 | ring | `ring-ring` | Focus rings |
 | card | `bg-card` | Card surfaces |
 | card-foreground | `text-card-foreground` | Text on cards |
+| popover | `bg-popover` | Popover and dropdown surfaces |
+| popover-foreground | `text-popover-foreground` | Text on popover surfaces |
+
+---
+
+## How to create a Viana Kit skill (for Claude / paper.design)
+
+A **skill** is a Markdown prompt file that teaches Claude or paper.design how to generate UI using Viana Kit components correctly. Skills enforce the design system constraints automatically so the AI never goes outside the system.
+
+### Skill file location
+
+Place skill files in:
+```
+.claude/skills/viana-ui.md       ← Claude Code skill
+```
+
+Or register them in your paper.design workspace as a custom prompt template.
+
+### Skill file structure
+
+```markdown
+---
+name: viana-ui
+description: Generate UI using Viana Kit primitives. Use this for any screen, page, mockup, or component request.
+---
+
+You are building UI using the Viana Kit design system. Follow every rule below exactly.
+
+## Component source
+Import all components from `@/components/primitives/*`. Never import from `@/components/ui/*`.
+
+## Available components
+[paste the full component table from AGENTS.md here]
+
+## Strict styling rules
+- Use ONLY Tailwind utility classes. No inline styles.
+- Use ONLY semantic token classes for color: bg-background, text-foreground, bg-primary,
+  text-primary-foreground, text-muted-foreground, border-border, bg-muted, bg-card,
+  text-card-foreground, bg-destructive, text-destructive, bg-secondary, bg-accent, etc.
+- NEVER use raw color values: no text-blue-500, no bg-[#fff], no text-[#333].
+- NEVER set font-family. The system font is managed by the token layer.
+- NEVER set arbitrary font sizes like text-[13px]. Use Tailwind scale only: text-xs, text-sm,
+  text-base, text-lg, text-xl, text-2xl, text-3xl, etc.
+- NEVER use inline style={{}} for any visual property.
+- Spacing: use Tailwind scale (p-2, p-4, gap-3, etc.). No arbitrary spacing like p-[7px].
+- Border radius: use rounded-sm, rounded-md, rounded-lg, rounded-full. No arbitrary radius.
+
+## Output format
+Return a single .tsx file. Add "use client" if the component uses state or events.
+Place all logic in the component function. No separate helper files unless asked.
+```
+
+### Rules for writing skills
+
+- Keep the component table current — paste from this AGENTS.md whenever it changes
+- The styling prohibitions must be explicit. List every forbidden pattern by name.
+- Do not allow the skill to accept "make it blue" or "use Roboto" instructions — the AI must redirect to semantic tokens instead
+- Skills are read-only prompts. They do not modify any source files.
+
+### Using a skill in Claude Code
+
+```bash
+# Invoke manually
+/viana-ui Build a user profile settings page with avatar, name field, email field, and save button
+
+# Or reference in a prompt
+Use the viana-ui skill to generate a dashboard with a stats grid and a recent activity table.
+```
+
+### Using a skill in paper.design
+
+1. Open your paper.design workspace settings
+2. Go to **Custom Prompts** → **Add Prompt**
+3. Paste the skill file content as the system prompt
+4. Name it `Viana Kit UI`
+5. When generating mockups, select **Viana Kit UI** as the active prompt — all generated code will be system-compliant
 
 ---
 
@@ -220,7 +317,9 @@ Viana Kit uses **Tailwind CSS v4** with design tokens as CSS variables.
 | Edit any file in `src/components/primitives/` | Create a wrapper in `src/components/blocks/` |
 | Import from `@/components/ui/*` in app code | Always go through the `App*` layer |
 | Use inline styles | Use Tailwind utility classes |
-| Use hardcoded colors | Use token-mapped Tailwind classes |
+| Use hardcoded or raw colors (`text-blue-500`, `bg-[#fff]`) | Use semantic token classes only |
+| Set `font-family` anywhere | The system font is managed by the token layer |
+| Set arbitrary `font-size` (`text-[13px]`) | Use Tailwind type scale (`text-sm`, `text-lg`, etc.) |
 | Copy-paste shadcn component code into a block | Compose the existing `App*` primitive |
 | Modify `globals.css` token block | The token block is managed — only edit below it |
 
@@ -253,4 +352,4 @@ The `.vianarc` file at the repo root tracks which version of each primitive is i
 
 ## Documentation
 
-Full component docs, props, and usage examples are at `https://viana-kit.vercel.app/docs/introduction`.
+Full component docs, props, and usage examples are at `https://viana-kit-core.vercel.app/docs/introduction`.

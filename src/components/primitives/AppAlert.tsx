@@ -1,60 +1,77 @@
-"use client"
-
 import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "../../lib/utils"
+import { Alert, AlertTitle, AlertDescription } from "../ui/alert"
+import { cn } from "@/lib/utils"
 
-const alertVariants = cva(
-  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
-  {
-    variants: {
-      variant: {
-        default: "bg-background text-foreground",
-        destructive:
-          "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
-)
+const nativeVariantClasses = {
+  default: "bg-background [&>svg]:text-gray-400",
+  destructive: "bg-destructive/5 [&>svg]:text-destructive",
+} as const
 
-const AppAlert = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
->(({ className, variant, ...props }, ref) => (
-  <div
-    ref={ref}
-    role="alert"
-    className={cn(alertVariants({ variant }), "rounded-md", className)}
-    {...props}
-  />
-))
-AppAlert.displayName = "AppAlert"
+const extendedVariantClasses = {
+  success: "border text-green-700 dark:text-green-700 [&>svg]:text-green-700",
+  warning: "border text-amber-600 dark:text-amber-600 [&>svg]:text-amber-600",
+  info: "border text-blue-400 dark:text-blue-400 [&>svg]:text-blue-400",
+} as const
+
+type ExtendedVariant = "default" | "destructive" | keyof typeof extendedVariantClasses
+
+type AppAlertProps = Omit<React.ComponentProps<typeof Alert>, "variant"> & {
+  variant?: ExtendedVariant
+}
+
+function AppAlert({ variant = "default", className, ...props }: AppAlertProps) {
+  const isExtended = variant in extendedVariantClasses
+  return (
+    <Alert
+      variant={isExtended ? "default" : (variant as "default" | "destructive")}
+      className={cn(
+        "flex items-center gap-3 px-3 py-2 [&>svg]:static [&>svg]:top-auto [&>svg]:left-auto [&>svg~*]:pl-0 [&>svg+div]:translate-y-0",
+        isExtended
+          ? extendedVariantClasses[variant as keyof typeof extendedVariantClasses]
+          : nativeVariantClasses[variant as keyof typeof nativeVariantClasses],
+        className
+      )}
+      {...props}
+    />
+  )
+}
 
 const AppAlertTitle = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
+  React.ComponentRef<typeof AlertTitle>,
+  React.ComponentPropsWithoutRef<typeof AlertTitle>
 >(({ className, ...props }, ref) => (
-  <h5
+  <AlertTitle
     ref={ref}
-    className={cn("mb-1 font-medium leading-none tracking-tight", className)}
+    className={cn("text-lg font-bold mb-0", className)}
     {...props}
   />
 ))
 AppAlertTitle.displayName = "AppAlertTitle"
 
 const AppAlertDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
+  React.ComponentRef<typeof AlertDescription>,
+  React.ComponentPropsWithoutRef<typeof AlertDescription>
 >(({ className, ...props }, ref) => (
-  <div
+  <AlertDescription
     ref={ref}
-    className={cn("text-sm [&_p]:leading-relaxed", className)}
+    className={cn("text-sm text-muted-foreground", className)}
     {...props}
   />
 ))
 AppAlertDescription.displayName = "AppAlertDescription"
 
-export { AppAlert, AppAlertTitle, AppAlertDescription }
+const AppAlertContent = React.forwardRef<                   
+    HTMLDivElement,                                           
+    React.HTMLAttributes<HTMLDivElement>                      
+  >(({ className, ...props }, ref) => (                       
+    <div                                                      
+      ref={ref}                                             
+      className={cn("flex flex-col",         
+  className)}                                                 
+      {...props}
+    />                                                        
+  ))                                                        
+  AppAlertContent.displayName = "AppAlertContent" 
+
+export { AppAlert, AppAlertTitle, AppAlertDescription, AppAlertContent }
+export type { AppAlertProps }
