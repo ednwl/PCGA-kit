@@ -19,6 +19,10 @@ type AppAlertProps = Omit<React.ComponentProps<typeof Alert>, "variant"> & {
   variant?: ExtendedVariant
 }
 
+/**
+ * AppAlert — Displays a callout for user attention.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 function AppAlert({ variant = "default", className, ...props }: AppAlertProps) {
   const isExtended = variant in extendedVariantClasses
   return (
@@ -36,6 +40,10 @@ function AppAlert({ variant = "default", className, ...props }: AppAlertProps) {
   )
 }
 
+/**
+ * AppAlertTitle — The title component for AppAlert.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 const AppAlertTitle = React.forwardRef<
   React.ComponentRef<typeof AlertTitle>,
   React.ComponentPropsWithoutRef<typeof AlertTitle>
@@ -48,6 +56,10 @@ const AppAlertTitle = React.forwardRef<
 ))
 AppAlertTitle.displayName = "AppAlertTitle"
 
+/**
+ * AppAlertDescription — The description component for AppAlert.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 const AppAlertDescription = React.forwardRef<
   React.ComponentRef<typeof AlertDescription>,
   React.ComponentPropsWithoutRef<typeof AlertDescription>
@@ -60,6 +72,10 @@ const AppAlertDescription = React.forwardRef<
 ))
 AppAlertDescription.displayName = "AppAlertDescription"
 
+/**
+ * AppAlertContent — The content container for AppAlert.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 const AppAlertContent = React.forwardRef<                   
     HTMLDivElement,                                           
     React.HTMLAttributes<HTMLDivElement>                      

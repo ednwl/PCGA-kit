@@ -34,15 +34,52 @@ type AppAlertDialogActionProps = React.ComponentPropsWithoutRef<typeof AlertDial
   variant?: ActionVariant
 }
 
+/**
+ * AppAlertDialog — A modal dialog that interrupts the user with important content and expects a response.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 const AppAlertDialog = AlertDialog
+
+/**
+ * AppAlertDialogPortal — The portal component for AppAlertDialog.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 const AppAlertDialogPortal = AlertDialogPortal
+
+/**
+ * AppAlertDialogOverlay — The overlay component for AppAlertDialog.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 const AppAlertDialogOverlay = AlertDialogOverlay
+
+/**
+ * AppAlertDialogTrigger — The trigger component for AppAlertDialog.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 const AppAlertDialogTrigger = AlertDialogTrigger
+
+/**
+ * AppAlertDialogContent — The content component for AppAlertDialog.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 const AppAlertDialogContent = AlertDialogContent
+
+/**
+ * AppAlertDialogHeader — The header component for AppAlertDialog.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 const AppAlertDialogHeader = AlertDialogHeader
+
+/**
+ * AppAlertDialogFooter — The footer component for AppAlertDialog.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 const AppAlertDialogFooter = AlertDialogFooter
 
-
+/**
+ * AppAlertDialogTitle — The title component for AppAlertDialog.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 const AppAlertDialogTitle = React.forwardRef<
   React.ComponentRef<typeof AlertDialogTitle>,
   React.ComponentPropsWithoutRef<typeof AlertDialogTitle>
@@ -51,6 +88,10 @@ const AppAlertDialogTitle = React.forwardRef<
 ))
 AppAlertDialogTitle.displayName = "AppAlertDialogTitle"
 
+/**
+ * AppAlertDialogDescription — The description component for AppAlertDialog.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 const AppAlertDialogDescription = React.forwardRef<
   React.ComponentRef<typeof AlertDialogDescription>,
   React.ComponentPropsWithoutRef<typeof AlertDialogDescription>
@@ -58,6 +99,10 @@ const AppAlertDialogDescription = React.forwardRef<
   <AlertDialogDescription ref={ref} className={cn("text-base", className)} {...props} />
 ))
 
+/**
+ * AppAlertDialogAction — The action button component for AppAlertDialog.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 const AppAlertDialogAction = React.forwardRef<
   React.ComponentRef<typeof AlertDialogAction>,
   AppAlertDialogActionProps
@@ -70,6 +115,10 @@ const AppAlertDialogAction = React.forwardRef<
 ))
 AppAlertDialogAction.displayName = "AppAlertDialogAction"
 
+/**
+ * AppAlertDialogCancel — The cancel button component for AppAlertDialog.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 const AppAlertDialogCancel = React.forwardRef<
   React.ComponentRef<typeof AlertDialogCancel>,
   AppAlertDialogActionProps

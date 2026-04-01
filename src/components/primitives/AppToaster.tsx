@@ -2,6 +2,10 @@
 
 import { Toaster as AppSonnerToaster, toast as appToast } from "sonner"
 
+/**
+ * AppToaster — A component that displays toast notifications.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 const AppToaster = () => {
   return (
     <AppSonnerToaster

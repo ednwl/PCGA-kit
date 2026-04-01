@@ -5,6 +5,10 @@ type AppSpinnerProps = React.SVGAttributes<SVGSVGElement> & {
   label?: string
 }
 
+/**
+ * AppSpinner — A loading indicator component.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 const AppSpinner = React.forwardRef<SVGSVGElement, AppSpinnerProps>(
   ({ className, label = "Loading...", ...props }, ref) => (
     <svg

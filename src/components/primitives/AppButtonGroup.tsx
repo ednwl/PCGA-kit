@@ -1,6 +1,10 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
+/**
+ * AppButtonGroup — A layout helper for grouping buttons together.
+ * @note If a prop you need is missing, stop and inform the design team.
+ */
 function AppButtonGroup({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
