@@ -1,0 +1,260 @@
+"use client"
+
+import * as React from "react"
+import { ChevronDown } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { PrimaryLogo } from "../../assets/logos"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupAction,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInput,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuAction,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSkeleton,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarSeparator,
+  SidebarTrigger,
+  useSidebar,
+} from "../ui/sidebar"
+
+// ─── AppSidebarBrand ─────────────────────────────────────────────────────────
+
+export type AppSidebarBrandDropdownItem =
+  | { separator: true }
+  | {
+      separator?: false
+      label: string
+      onClick?: () => void
+      icon?: React.ReactNode
+      disabled?: boolean
+    }
+
+export type AppSidebarBrandProps = {
+  logo?: string | React.ReactNode
+  dropdown?: AppSidebarBrandDropdownItem[]
+  showChevron?: boolean
+  className?: string
+}
+
+function AppSidebarBrand({
+  logo = <PrimaryLogo width={90} height={28} />,
+  dropdown,
+  showChevron = true,
+  className,
+}: AppSidebarBrandProps) {
+  const inner = (
+    <div className="relative flex w-full items-center justify-center py-1">
+      {typeof logo === "string" ? (
+        <span className="text-sm font-semibold text-foreground">{logo}</span>
+      ) : (
+        logo
+      )}
+      {dropdown && showChevron && (
+        <ChevronDown className="absolute right-0 size-4 shrink-0 text-muted-foreground" />
+      )}
+    </div>
+  )
+
+  if (!dropdown) {
+    return (
+      <div className={cn("flex items-center px-2", className)}>
+        {inner}
+      </div>
+    )
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          className={cn(
+            "flex w-full items-center rounded-md px-2 outline-none",
+            "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+            "focus-visible:ring-2 focus-visible:ring-sidebar-ring",
+            className
+          )}
+        >
+          {inner}
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        side="bottom"
+        align="start"
+        className="min-w-(--radix-dropdown-menu-trigger-width)"
+      >
+        {dropdown.map((item, i) => {
+          if ("separator" in item && item.separator) {
+            return <DropdownMenuSeparator key={i} />
+          }
+          const { label, onClick, icon, disabled } = item as Exclude<
+            AppSidebarBrandDropdownItem,
+            { separator: true }
+          >
+          return (
+            <DropdownMenuItem key={i} disabled={disabled} onClick={onClick}>
+              {icon && <span className="mr-2 flex items-center">{icon}</span>}
+              {label}
+            </DropdownMenuItem>
+          )
+        })}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+// ─── Passthrough wrappers ─────────────────────────────────────────────────────
+
+function AppSidebarProvider(props: React.ComponentProps<typeof SidebarProvider>) {
+  return <SidebarProvider {...props} />
+}
+
+function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
+  return <Sidebar {...props} />
+}
+
+function AppSidebarTrigger(props: React.ComponentProps<typeof SidebarTrigger>) {
+  return <SidebarTrigger {...props} />
+}
+
+function AppSidebarRail(props: React.ComponentProps<typeof SidebarRail>) {
+  return <SidebarRail {...props} />
+}
+
+function AppSidebarInset(props: React.ComponentProps<typeof SidebarInset>) {
+  return <SidebarInset {...props} />
+}
+
+function AppSidebarInput(props: React.ComponentProps<typeof SidebarInput>) {
+  return <SidebarInput {...props} />
+}
+
+function AppSidebarHeader(props: React.ComponentProps<typeof SidebarHeader>) {
+  return <SidebarHeader {...props} />
+}
+
+function AppSidebarFooter(props: React.ComponentProps<typeof SidebarFooter>) {
+  return <SidebarFooter {...props} />
+}
+
+function AppSidebarSeparator(props: React.ComponentProps<typeof SidebarSeparator>) {
+  return <SidebarSeparator {...props} />
+}
+
+function AppSidebarContent(props: React.ComponentProps<typeof SidebarContent>) {
+  return <SidebarContent {...props} />
+}
+
+function AppSidebarGroup(props: React.ComponentProps<typeof SidebarGroup>) {
+  return <SidebarGroup {...props} />
+}
+
+function AppSidebarGroupLabel(props: React.ComponentProps<typeof SidebarGroupLabel>) {
+  return <SidebarGroupLabel {...props} />
+}
+
+function AppSidebarGroupAction(props: React.ComponentProps<typeof SidebarGroupAction>) {
+  return <SidebarGroupAction {...props} />
+}
+
+function AppSidebarGroupContent(props: React.ComponentProps<typeof SidebarGroupContent>) {
+  return <SidebarGroupContent {...props} />
+}
+
+function AppSidebarMenu(props: React.ComponentProps<typeof SidebarMenu>) {
+  return <SidebarMenu {...props} />
+}
+
+function AppSidebarMenuItem(props: React.ComponentProps<typeof SidebarMenuItem>) {
+  return <SidebarMenuItem {...props} />
+}
+
+function AppSidebarMenuButton({ className, ...props }: React.ComponentProps<typeof SidebarMenuButton>) {
+  return (
+    <SidebarMenuButton
+      className={cn(
+        // Remove fill on hover and CSS :active
+        "hover:bg-transparent hover:text-sidebar-foreground",
+        "active:bg-transparent active:text-sidebar-foreground",
+        // data-active: matches ALL buttons (attribute present even when "false") — reset to transparent
+        "data-active:bg-transparent data-active:font-normal data-active:text-sidebar-foreground",
+        // Re-apply accent only when explicitly true
+        "data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+function AppSidebarMenuAction(props: React.ComponentProps<typeof SidebarMenuAction>) {
+  return <SidebarMenuAction {...props} />
+}
+
+function AppSidebarMenuBadge(props: React.ComponentProps<typeof SidebarMenuBadge>) {
+  return <SidebarMenuBadge {...props} />
+}
+
+function AppSidebarMenuSkeleton(props: React.ComponentProps<typeof SidebarMenuSkeleton>) {
+  return <SidebarMenuSkeleton {...props} />
+}
+
+function AppSidebarMenuSub(props: React.ComponentProps<typeof SidebarMenuSub>) {
+  return <SidebarMenuSub {...props} />
+}
+
+function AppSidebarMenuSubItem(props: React.ComponentProps<typeof SidebarMenuSubItem>) {
+  return <SidebarMenuSubItem {...props} />
+}
+
+function AppSidebarMenuSubButton(props: React.ComponentProps<typeof SidebarMenuSubButton>) {
+  return <SidebarMenuSubButton {...props} />
+}
+
+export {
+  AppSidebar,
+  AppSidebarBrand,
+  AppSidebarContent,
+  AppSidebarFooter,
+  AppSidebarGroup,
+  AppSidebarGroupAction,
+  AppSidebarGroupContent,
+  AppSidebarGroupLabel,
+  AppSidebarHeader,
+  AppSidebarInput,
+  AppSidebarInset,
+  AppSidebarMenu,
+  AppSidebarMenuAction,
+  AppSidebarMenuBadge,
+  AppSidebarMenuButton,
+  AppSidebarMenuItem,
+  AppSidebarMenuSkeleton,
+  AppSidebarMenuSub,
+  AppSidebarMenuSubButton,
+  AppSidebarMenuSubItem,
+  AppSidebarProvider,
+  AppSidebarRail,
+  AppSidebarSeparator,
+  AppSidebarTrigger,
+  useSidebar,
+}
