@@ -12,3 +12,10 @@ export {
   AppHeaderSearchbar,
   AppHeaderActions,
 } from "./AppHeader"
+
+export {
+  AppDashboardShell,
+  type AppDashboardShellProps,
+  type AppDashboardShellNavSection,
+  type AppDashboardShellNavItem,
+} from "./AppDashboardShell"

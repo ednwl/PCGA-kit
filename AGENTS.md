@@ -26,61 +26,57 @@ src/app/          ← Pages. Import from blocks/ or primitives/ directly.
 
 ---
 
-## Dashboard scaffold — mandatory starting point
+## Dashboard layout — mandatory starting point
 
-The **Dashboard block** is the canonical layout for every page. When building, prototyping, or generating any new page, **always start from this skeleton**. Do not invent your own layout structure.
+Every page uses `AppDashboardShell`. **Do not compose the dashboard scaffold manually.**
 
-Read `rules/dashboard.md` for the full specification and starter template.
-
-### Immutable structure
-
-```
-AppSidebarProvider
-  AppDashboard
-    AppSidebar collapsible="icon"
-      AppSidebarHeader > AppSidebarBrand
-      AppSidebarContent > AppSidebarGroup(s) > menu items
-      AppSidebarRail
-    AppDashboardContent
-      AppHeader className="border-none"
-        AppHeaderContent
-          AppSidebarTrigger
-          AppSeparator
-          AppHeaderSearchbar
-          AppHeaderActions
-      AppDashboardMain className="p-6"
-        {/* YOUR CONTENT — only modify this area */}
+```tsx
+import { AppDashboardShell } from "@/components/blocks/AppDashboardShell"
 ```
 
-### Light/dark mode behavior
+Pass your nav sections and page content. The sidebar brand, animated background, header, and layout structure are handled automatically:
 
-The dashboard has a deliberate split:
+```tsx
+const nav = [
+  { items: [{ title: "Dashboard", icon: LayoutDashboard, isActive: true }] },
+  {
+    label: "Manage",
+    items: [
+      { title: "Sites",   icon: MapPin },
+      { title: "Devices", icon: Server },
+    ],
+  },
+]
+
+export default function Page() {
+  return (
+    <AppDashboardShell nav={nav} headerActions={<AppAvatar className="size-8"><AppAvatarFallback>U</AppAvatarFallback></AppAvatar>}>
+      {/* Your page content here */}
+    </AppDashboardShell>
+  )
+}
+```
+
+Read `rules/dashboard-shell.md` for the full props reference and examples.
+
+### Light/dark split — do not override
 
 | Area | Theme |
 |------|-------|
-| `AppSidebar` | Always dark — has its own `dark` class |
-| `AppHeader` | Always dark — has its own `dark` class |
-| `AppDashboardBackground` | Always dark — animated dot background uses dark tokens |
-| `AppDashboardMain` | Follows the page theme (light in light mode, dark in dark mode) |
+| Sidebar | Always dark — transparent background, `dark` class applied internally |
+| Header | Always dark — transparent background, `dark` class applied internally |
+| Animated background | Always dark — uses dark tokens |
+| Main content area | Follows the page theme |
 
-Do not attempt to override this. Do not add `dark` to `AppDashboardMain` or `AppDashboardContent`. Do not add background colors to `AppSidebar` or `AppHeader` — both use a transparent background so the animated dot layer shows through.
+Do not add `bg-*`, `dark`, or `border-*` to the shell or its surrounding elements. These are controlled internally and must not be overridden.
 
-### What you CAN change
+### What you control via AppDashboardShell
 
-- **Sidebar menu items** — add/remove/reorder `AppSidebarMenuItem` entries, change icons, labels, `isActive`
-- **Sidebar groups** — add/remove `AppSidebarGroup` sections
-- **AppDashboardMain content** — everything inside `<AppDashboardMain>` is your canvas
-- **AppHeaderActions content** — swap selects, buttons, avatar
-- **AppHeaderSearchbar content** — customize the search input group
-
-### What you MUST NOT change
-
-- The composition order of structural components
-- `AppDashboard`, `AppDashboardBackground`, `AppDashboardContent` — do not rearrange, wrap, or remove
-- `AppHeader` placement — always first child of `AppDashboardContent` with `className="border-none"`
-- `AppSidebar` props — always `collapsible="icon"`
-- `AppSidebarBrand` — use the component, do not replace with a manual logo
-- `AppSidebarRail` — do not remove
+- `nav` — sidebar sections, groups, items, icons, active state
+- `headerActions` — right-side controls (selects, avatar, buttons)
+- `headerSearchbar` — searchbar slot (or `null` to hide)
+- `mainClassName` — extra classes on the content area (e.g. `"p-0"` for full-bleed)
+- `children` — your page content
 
 ---
 
@@ -90,7 +86,8 @@ Before using any primitive, read its rule file. Each file has the full prop list
 
 | Component | Rule file |
 |-----------|-----------|
-| Dashboard (block) | `rules/dashboard.md` |
+| AppDashboardShell (block) | `rules/dashboard-shell.md` |
+| Dashboard internals (reference only) | `rules/dashboard.md` |
 | Header (block) | `rules/header.md` |
 | AppAccordion | `rules/accordion.md` |
 | AppAlert | `rules/alert.md` |
@@ -289,6 +286,8 @@ Check the rule file first to confirm the prop doesn't exist. If it doesn't, stop
 
 | ❌ Never | ✅ Instead |
 |----------|-----------|
+| Compose the dashboard scaffold manually | Use `AppDashboardShell` from `@/components/blocks` |
+| Add `bg-*`/`dark`/`border-*` to sidebar or header | These are controlled internally — do not override |
 | Edit any file in `src/components/ui/` | Import from `@/components/primitives/*` |
 | Edit any file in `src/components/primitives/` | Create a wrapper in `src/components/blocks/` |
 | Import from `@/components/ui/*` in app code | Always go through the `App*` layer |
