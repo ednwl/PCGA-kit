@@ -1,6 +1,6 @@
-# Viana Kit — v0.1.4
+# Viana Kit — v0.1.26
 
-A Next.js design system starter with pre-built UI primitives, design tokens, and AI skill support.
+A Next.js design system starter with pre-built UI primitives, layout blocks, design tokens, and AI skill support.
 
 Built on shadcn/ui + Tailwind CSS v4. All components are managed — you compose, never modify.
 
@@ -25,12 +25,102 @@ Full component documentation: **https://viana-kit-core.vercel.app/docs/introduct
 src/components/
 ├── ui/           ← shadcn/ui base. NEVER TOUCH.
 ├── primitives/   ← Viana Kit App* wrappers. NEVER TOUCH.
-└── blocks/       ← Your code. Compose primitives here.
+├── blocks/       ← Managed layout blocks (Dashboard, Header). NEVER TOUCH.
+└── your-code/    ← Your pages and custom compositions go in src/app/ or new block files.
 ```
 
-- `ui/` and `primitives/` are managed. The Viana CLI overwrites them on update.
-- `blocks/` is yours. Build product UI by composing `App*` primitives.
-- Never import from `ui/` in your own code — always go through `primitives/`.
+- `ui/`, `primitives/`, and `blocks/` are managed. The Viana CLI overwrites them on update.
+- Build product UI by composing `App*` primitives and using the Dashboard scaffold as a starting point.
+- Never import from `ui/` in your own code — always go through `primitives/` or `blocks/`.
+
+---
+
+## Dashboard Scaffold — Start Here
+
+Every new page should start from the **Dashboard block** — the canonical application layout with an animated gradient background, collapsible sidebar, dark header, and rounded content area.
+
+```tsx
+import {
+  AppDashboard, AppDashboardContent, AppDashboardMain,
+} from "@/components/blocks/AppDashboard"
+import {
+  AppHeader, AppHeaderContent, AppHeaderSearchbar, AppHeaderActions,
+} from "@/components/blocks/AppHeader"
+import {
+  AppSidebarProvider, AppSidebar, AppSidebarHeader, AppSidebarContent,
+  AppSidebarGroup, AppSidebarGroupLabel, AppSidebarGroupContent,
+  AppSidebarMenu, AppSidebarMenuItem, AppSidebarMenuButton,
+  AppSidebarBrand, AppSidebarTrigger, AppSidebarRail, AppSeparator,
+  AppButtonGroup, AppButton, AppInput, AppAvatar, AppAvatarFallback,
+} from "@/components/primitives"
+import { Search, LayoutDashboard } from "lucide-react"
+
+export default function Page() {
+  return (
+    <AppSidebarProvider
+      style={{
+        "--sidebar-width": "14rem",
+        "--header-height": "3.5rem",
+      } as React.CSSProperties}
+    >
+      <AppDashboard>
+        <AppSidebar collapsible="icon">
+          <AppSidebarHeader>
+            <AppSidebarBrand />
+          </AppSidebarHeader>
+          <AppSidebarContent>
+            <AppSidebarGroup>
+              <AppSidebarGroupLabel>Manage</AppSidebarGroupLabel>
+              <AppSidebarGroupContent>
+                <AppSidebarMenu>
+                  <AppSidebarMenuItem>
+                    <AppSidebarMenuButton isActive tooltip="Dashboards">
+                      <LayoutDashboard />
+                      <span>Dashboards</span>
+                    </AppSidebarMenuButton>
+                  </AppSidebarMenuItem>
+                </AppSidebarMenu>
+              </AppSidebarGroupContent>
+            </AppSidebarGroup>
+          </AppSidebarContent>
+          <AppSidebarRail />
+        </AppSidebar>
+
+        <AppDashboardContent>
+          <AppHeader className="border-none">
+            <AppHeaderContent>
+              <AppSidebarTrigger />
+              <AppSeparator orientation="vertical" className="mx-1 h-4" />
+              <AppHeaderSearchbar>
+                <AppButtonGroup className="w-full max-w-sm">
+                  <AppInput placeholder="Search..." />
+                  <AppButton variant="outline">
+                    <Search className="h-4 w-4" />
+                  </AppButton>
+                </AppButtonGroup>
+              </AppHeaderSearchbar>
+              <AppHeaderActions>
+                <AppAvatar className="size-8">
+                  <AppAvatarFallback>U</AppAvatarFallback>
+                </AppAvatar>
+              </AppHeaderActions>
+            </AppHeaderContent>
+          </AppHeader>
+
+          <AppDashboardMain className="p-6">
+            {/* Your page content here */}
+          </AppDashboardMain>
+        </AppDashboardContent>
+      </AppDashboard>
+    </AppSidebarProvider>
+  )
+}
+```
+
+**What you can change:** sidebar menu items, `AppDashboardMain` content, header actions/search.
+**What you must not change:** the composition order, structural components, sidebar props (`collapsible="icon"`).
+
+See `rules/dashboard.md` for the full specification.
 
 ---
 
