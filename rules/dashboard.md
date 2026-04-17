@@ -1,106 +1,187 @@
-# Dashboard Block — Architecture Reference
+# AppDashboardShell
 
-> **Do not use these components directly to build pages.**
-> Use `AppDashboardShell` instead — see `rules/dashboard-shell.md`.
->
-> This file documents the underlying components for design-team reference only.
-> AI agents should never compose this scaffold manually.
+> **Primary entry point** — Use this for every new page. Do not compose the dashboard scaffold manually.
 
----
+## When to use
 
-## Component overview
+Any time you are building a new page that requires the standard application layout: animated dot background, collapsible sidebar with brand, and a top header.
 
-### AppDashboard
-
-Full-page layout shell. Renders `AppDashboardBackground` as an absolute layer and accepts `AppSidebar` + `AppDashboardContent` as children.
+## Import
 
 ```tsx
-import { AppDashboard } from "@/components/blocks/AppDashboard"
+import { AppDashboardShell } from "@/components/blocks/AppDashboardShell"
 ```
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `className` | `string` | Extra classes on the root div. |
-| `children` | `ReactNode` | Must be `AppSidebar` + `AppDashboardContent`. |
-
-### AppDashboardBackground
-
-Animated gradient dot pattern with mouse-follow glow. Renders as `position: absolute, inset: 0` behind all content. Managed internally by `AppDashboard` — do not render separately.
+## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `dotSize` | `number` | `8` | Dot radius in px. |
-| `spacing` | `number` | `10` | Grid spacing in px. |
-| `duration` | `number` | `30` | Animation cycle in seconds. |
-| `interactive` | `boolean` | `true` | Enable mouse-follow glow. |
+| `nav` | `AppDashboardShellNavSection[]` | required | Sidebar navigation. Each section renders a group with an optional label. |
+| `headerActions` | `ReactNode` | — | Right-side header slot — `AppSelect`, `AppAvatar`, icon buttons, etc. Omit to render nothing. |
+| `headerSearchbar` | `ReactNode` | Standard search input | Searchbar slot. Pass `null` to suppress entirely. |
+| `sidebarWidth` | `string` | `"14rem"` | Overrides the `--sidebar-width` CSS variable. |
+| `headerHeight` | `string` | `"3.5rem"` | Overrides the `--header-height` CSS variable. |
+| `mainClassName` | `string` | `"p-6"` | Extra classes forwarded to `AppDashboardMain`. Use to override padding or add layout utilities. |
+| `children` | `ReactNode` | required | Your page content. Renders inside `AppDashboardMain`. |
 
-### AppDashboardContent
+### AppDashboardShellNavSection
 
-The right-hand column that holds the header and main content. `flex-1 flex flex-col`.
+```ts
+type AppDashboardShellNavSection = {
+  label?: string                      // optional group label
+  items: AppDashboardShellNavItem[]
+}
+```
+
+### AppDashboardShellNavItem
+
+```ts
+type AppDashboardShellNavItem = {
+  title: string                       // label and tooltip text
+  icon: React.ElementType             // lucide-react icon component
+  isActive?: boolean                  // marks the current route
+}
+```
+
+## Usage
+
+### Minimal
 
 ```tsx
-import { AppDashboardContent } from "@/components/blocks/AppDashboard"
+import { LayoutDashboard } from "lucide-react"
+import { AppDashboardShell } from "@/components/blocks/AppDashboardShell"
+
+const nav = [
+  { items: [{ title: "Dashboard", icon: LayoutDashboard, isActive: true }] },
+]
+
+export default function Page() {
+  return (
+    <AppDashboardShell nav={nav}>
+      <p>Page content here.</p>
+    </AppDashboardShell>
+  )
+}
 ```
 
-### AppDashboardMain
-
-The primary content area. `rounded-tl-3xl bg-background shadow-2xl`. Always pass `className="p-6"` (or override via `mainClassName` on `AppDashboardShell`).
+### With header actions and sectioned nav
 
 ```tsx
-import { AppDashboardMain } from "@/components/blocks/AppDashboard"
+import {
+  LayoutDashboard, MapPin, Server, Cctv,
+  LineChart, FileText, LayoutGrid,
+} from "lucide-react"
+import {
+  AppSelect, AppSelectTrigger, AppSelectValue,
+  AppSelectContent, AppSelectItem,
+  AppAvatar, AppAvatarFallback,
+} from "@/components/primitives"
+import { AppDashboardShell } from "@/components/blocks/AppDashboardShell"
+import { ManifestContent } from "@/components/blocks/ManifestContent"
+
+const nav = [
+  {
+    items: [{ title: "Dashboard", icon: LayoutDashboard }],
+  },
+  {
+    label: "Manage",
+    items: [
+      { title: "Sites",   icon: MapPin },
+      { title: "Devices", icon: Server },
+      { title: "Sensors", icon: Cctv },
+    ],
+  },
+  {
+    label: "Insights",
+    items: [
+      { title: "Analytics", icon: LineChart },
+      { title: "Manifest",  icon: FileText, isActive: true },
+      { title: "Overview",  icon: LayoutGrid },
+    ],
+  },
+]
+
+const headerActions = (
+  <>
+    <AppSelect defaultValue="network-1">
+      <AppSelectTrigger className="w-40">
+        <AppSelectValue />
+      </AppSelectTrigger>
+      <AppSelectContent>
+        <AppSelectItem value="network-1">MeldCX Network</AppSelectItem>
+      </AppSelectContent>
+    </AppSelect>
+    <AppAvatar className="size-8">
+      <AppAvatarFallback>KA</AppAvatarFallback>
+    </AppAvatar>
+  </>
+)
+
+export default function ManifestPage() {
+  return (
+    <AppDashboardShell nav={nav} headerActions={headerActions}>
+      <ManifestContent />
+    </AppDashboardShell>
+  )
+}
 ```
 
----
+### Custom searchbar
 
-## Composition structure (reference)
-
-```
-AppSidebarProvider
-  AppDashboard
-    AppSidebar collapsible="icon"
-      AppSidebarHeader
-        AppSidebarBrand
-      AppSidebarContent
-        AppSidebarGroup
-          AppSidebarGroupLabel
-          AppSidebarGroupContent
-            AppSidebarMenu
-              AppSidebarMenuItem
-                AppSidebarMenuButton isActive tooltip="..."
-                  <Icon />
-                  <span>Label</span>
-      AppSidebarRail
-    AppDashboardContent
-      AppHeader className="border-none"
-        AppHeaderContent
-          AppSidebarTrigger
-          AppSeparator orientation="vertical"
-          AppHeaderSearchbar
-          AppHeaderActions
-      AppDashboardMain className="p-6"
-        {/* page content */}
+```tsx
+<AppDashboardShell
+  nav={nav}
+  headerSearchbar={
+    <AppButtonGroup className="w-full max-w-md">
+      <AppInput placeholder="Search sessions..." />
+      <AppButton variant="outline">
+        <Search className="h-4 w-4" />
+      </AppButton>
+    </AppButtonGroup>
+  }
+>
+  <PageContent />
+</AppDashboardShell>
 ```
 
-## Light/dark split
+### No searchbar
 
-| Area | Theme |
-|------|-------|
-| `AppSidebar` | Always dark — transparent background, `dark` class |
-| `AppHeader` | Always dark — transparent background, `dark` class |
-| `AppDashboardBackground` | Always dark |
-| `AppDashboardMain` | Follows the page theme |
+```tsx
+<AppDashboardShell nav={nav} headerSearchbar={null}>
+  <PageContent />
+</AppDashboardShell>
+```
 
-Do not add background colors to `AppSidebar` or `AppHeader`. Both have a transparent background so the animated dot layer shows through. This is intentional and must not be overridden.
+### Override padding
 
----
+```tsx
+<AppDashboardShell nav={nav} mainClassName="p-0">
+  <FullBleedContent />
+</AppDashboardShell>
+```
 
-## Rules (design team)
+## AppDashboardBackground color tokens
 
-- `AppDashboard` must always have `AppDashboardBackground` as its first rendered child (it is injected automatically).
-- `AppDashboardMain` must always be a direct child of `AppDashboardContent`.
-- `AppHeader` must always be the first child of `AppDashboardContent` with `className="border-none"`.
-- `AppSidebar` must always use `collapsible="icon"`.
-- `AppSidebarBrand` must always be the first child of `AppSidebarHeader`.
-- `AppSidebarRail` must always be present inside `AppSidebar`.
+`AppDashboardBackground` always renders in `.dark` mode. All colors resolve from the dark theme:
 
-If a prop you need is missing, inform the design team.
+| Role | Token | Usage |
+|------|-------|-------|
+| Background | `--card` → `--secondary` | `bg-gradient-to-br from-card to-secondary` — dark navy top-left fading to a slightly lighter, more saturated dark blue bottom-right |
+| Wave lines | `--accent` | Canvas `strokeStyle`, read via `getComputedStyle` at mount |
+| Mouse glow core | `--primary` | 50% opacity, blurred 100px |
+| Mouse glow mid ring | `--muted` | 10% opacity, blurred 100px |
+| Mouse glow overlay | `--sidebar-primary` | 20% opacity, `mix-blend-mode: screen`, blurred 100px |
+
+Do not hardcode `oklch(...)`, `hsl(...)`, or `#hex` values anywhere in this component — always use `var(--token)` or a Tailwind color class.
+
+## Rules
+
+- **Do** use `AppDashboardShell` as the default layout for every page — do not compose the scaffold manually.
+- **Do** set `isActive` on exactly one nav item per page to mark the current route.
+- **Do** pass all icons as `React.ElementType` (the component itself, not `<Icon />`).
+- **Do** use `headerActions` for right-side controls (selects, avatar, icon buttons).
+- **Don't** add background colors, `dark` class, or layout wrappers around `AppDashboardShell` — it manages its own full-page layout.
+- **Don't** try to override the sidebar brand, the `border-none` on the header, or `collapsible="icon"` on the sidebar — these are fixed by the shell.
+- **Don't** import `AppDashboard`, `AppDashboardContent`, `AppSidebarProvider`, `AppHeader`, etc. to rebuild the scaffold yourself — that is what this component replaces.
+
+If a prop you need is missing, stop and inform the design team.

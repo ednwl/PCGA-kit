@@ -57,7 +57,7 @@ export default function Page() {
 }
 ```
 
-Read `rules/dashboard-shell.md` for the full props reference and examples.
+Read `rules/dashboard.md` for the full props reference and examples.
 
 ### Light/dark split — do not override
 
@@ -86,8 +86,7 @@ Before using any primitive, read its rule file. Each file has the full prop list
 
 | Component | Rule file |
 |-----------|-----------|
-| AppDashboardShell (block) | `rules/dashboard-shell.md` |
-| Dashboard internals (reference only) | `rules/dashboard.md` |
+| AppDashboardShell (block) | `rules/dashboard.md` |
 | Header (block) | `rules/header.md` |
 | AppAccordion | `rules/accordion.md` |
 | AppAlert | `rules/alert.md` |
