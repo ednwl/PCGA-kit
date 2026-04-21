@@ -22,6 +22,8 @@ import { AppDashboard } from "@/components/blocks/AppDashboard"
 | `subtitle` | `string` | — | Optional description rendered below the heading. |
 | `breadcrumbs` | `AppPageTitleBreadcrumb[]` | auto | Explicit breadcrumb trail. Auto-generated from `window.location.pathname` when omitted. |
 | `actions` | `ReactNode` | — | Right-side action slot. Accepts any elements — buttons, selects, text, etc. Empty by default. |
+| `icon` | `ReactNode` | — | Optional icon rendered to the left of the title stack. Accepts `<img>`, SVG, or Lucide icons. Omit to hide. |
+| `titleColor` | `"default" \| "primary"` | `"default"` | Controls the h1 color. `"default"` uses `text-foreground`; `"primary"` uses the brand blue. |
 | `hidden` | `boolean` | `false` | Hides the entire block. |
 | `className` | `string` | — | Extra classes on the root element. |
 
@@ -104,12 +106,51 @@ When `breadcrumbs` is omitted, the component reads `window.location.pathname` on
 - The final segment has no `href` (current page, non-linked)
 - All preceding segments get `href` values pointing to their cumulative path
 
+## With icon
+
+```tsx
+<AppDashboard
+  nav={nav}
+  pageTitle={{
+    title: "Hi Kevin! Welcome to Viana",
+    subtitle: "Stay up to date to everything in your network",
+    breadcrumbs: [{ label: "Dashboard" }],
+    titleColor: "primary",
+    icon: (
+      <img
+        src="/persistent-icon.png"
+        alt="Dashboard"
+        className="size-16 rounded-xl"
+      />
+    ),
+  }}
+>
+  <PageContent />
+</AppDashboard>
+```
+
+## With primary title color
+
+```tsx
+<AppDashboard
+  nav={nav}
+  pageTitle={{
+    title: "Dashboard",
+    titleColor: "primary",
+  }}
+>
+  <PageContent />
+</AppDashboard>
+```
+
 ## Rules
 
 - **Do** use `pageTitle` on `AppDashboard` rather than placing `AppPageTitle` manually inside the page content.
 - **Do** pass `pageTitle={false}` to explicitly suppress the block — do not conditionally omit it based on state.
 - **Do** put action buttons in the `actions` slot — do not place them above the title.
+- **Do** size and style the `icon` yourself — pass `className="size-16 rounded-xl"` on the `<img>` or wrapper. The component does not enforce icon dimensions.
 - **Don't** hardcode breadcrumbs when auto-generation is correct — only override when the URL structure doesn't match the desired labels.
 - **Don't** add additional margin-top to page content — `AppPageTitle` already provides `mb-6` spacing.
+- **Don't** use raw color values for `titleColor` overrides — use the `titleColor` prop, not a `className` on the heading.
 
 If a prop you need is missing, stop and inform the design team.

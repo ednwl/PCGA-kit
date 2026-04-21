@@ -37,6 +37,19 @@ export type AppPageTitleProps = {
    * Renders nothing by default.
    */
   actions?: React.ReactNode
+  /**
+   * Optional icon rendered to the left of the title text stack.
+   * Accepts any ReactNode — <img>, SVG, Lucide icon, etc.
+   * Renders nothing when omitted.
+   */
+  icon?: React.ReactNode
+  /**
+   * Controls the h1 heading color.
+   * - "default" — text-foreground
+   * - "primary" — text-primary (brand blue)
+   * @default "default"
+   */
+  titleColor?: "default" | "primary"
   /** Hides the entire block when true. */
   hidden?: boolean
   className?: string
@@ -106,6 +119,8 @@ function AppPageTitle({
   subtitle,
   breadcrumbs,
   actions,
+  icon,
+  titleColor = "default",
   hidden = false,
   className,
 }: AppPageTitleProps) {
@@ -127,33 +142,41 @@ function AppPageTitle({
 
   return (
     <div className={cn("mb-6 flex items-start justify-between gap-4", className)}>
-      <div className="space-y-1 min-w-0">
-        {crumbs.length > 0 && (
-          <AppBreadcrumb>
-            <AppBreadcrumbList>
-              {crumbs.map((crumb, i) => (
-                <React.Fragment key={i}>
-                  <AppBreadcrumbItem>
-                    {crumb.href ? (
-                      <AppBreadcrumbLink href={crumb.href}>
-                        {crumb.label}
-                      </AppBreadcrumbLink>
-                    ) : (
-                      <AppBreadcrumbPage>{crumb.label}</AppBreadcrumbPage>
-                    )}
-                  </AppBreadcrumbItem>
-                  {i < crumbs.length - 1 && <AppBreadcrumbSeparator />}
-                </React.Fragment>
-              ))}
-            </AppBreadcrumbList>
-          </AppBreadcrumb>
-        )}
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">
-          {heading}
-        </h1>
-        {subtitle && (
-          <p className="text-sm text-muted-foreground">{subtitle}</p>
-        )}
+      <div className="flex items-start gap-3 min-w-0">
+        {icon && <div className="mt-1 shrink-0">{icon}</div>}
+        <div className="space-y-1 min-w-0">
+          {crumbs.length > 0 && (
+            <AppBreadcrumb>
+              <AppBreadcrumbList>
+                {crumbs.map((crumb, i) => (
+                  <React.Fragment key={i}>
+                    <AppBreadcrumbItem>
+                      {crumb.href ? (
+                        <AppBreadcrumbLink href={crumb.href}>
+                          {crumb.label}
+                        </AppBreadcrumbLink>
+                      ) : (
+                        <AppBreadcrumbPage>{crumb.label}</AppBreadcrumbPage>
+                      )}
+                    </AppBreadcrumbItem>
+                    {i < crumbs.length - 1 && <AppBreadcrumbSeparator />}
+                  </React.Fragment>
+                ))}
+              </AppBreadcrumbList>
+            </AppBreadcrumb>
+          )}
+          <h1
+            className={cn(
+              "text-2xl font-bold tracking-tight",
+              titleColor === "primary" ? "text-primary" : "text-foreground"
+            )}
+          >
+            {heading}
+          </h1>
+          {subtitle && (
+            <p className="text-sm text-muted-foreground">{subtitle}</p>
+          )}
+        </div>
       </div>
       {actions && (
         <div className="flex shrink-0 items-center gap-2">{actions}</div>
