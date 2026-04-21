@@ -46,14 +46,14 @@ function Img({
 
 const nav = [
   {
-    items: [{ title: "Dashboards", icon: LayoutDashboard, isActive: true }],
+    items: [{ title: "Dashboards", icon: LayoutDashboard, href: "/dashboard", isActive: true }],
   },
   {
     label: "Manage",
     items: [
-      { title: "Site", icon: MapPin },
+      { title: "Sites", icon: MapPin, href: "/sites" },
       { title: "Devices", icon: Server },
-      { title: "Sensor", icon: Cpu },
+      { title: "Sensors", icon: Cpu },
     ],
   },
   {
