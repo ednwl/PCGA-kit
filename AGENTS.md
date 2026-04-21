@@ -311,6 +311,14 @@ Check the rule file first to confirm the prop doesn't exist. If it doesn't, stop
 
 ---
 
+## How components arrive here
+
+`ui/` and `primitives/` are managed entirely by `viana-kit-core`. They are updated via `npm run sync` after a component has been built, reviewed, and approved in the core repo. Do not edit these files — your changes will be overwritten on the next sync.
+
+If a primitive is missing from the table above, it may be in progress in `viana-kit-core` and not yet published. Stop and inform the user so it can be completed and synced before you proceed.
+
+---
+
 ## File structure
 
 ```
