@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
 import { LayoutGrid, Moon, Search, Sun } from "lucide-react"
 import { motion } from "motion/react"
 import { cn } from "@/lib/utils"
@@ -432,8 +431,6 @@ export type AppDashboardNavItem = {
   icon: React.ElementType
   /** Marks this item as the active route. Set on exactly one item per page. */
   isActive?: boolean
-  /** Next.js route to navigate to when the item is clicked. */
-  href?: string
 }
 
 export type AppDashboardNavSection = {
@@ -610,26 +607,13 @@ function AppDashboard({
                   <AppSidebarMenu>
                     {section.items.map((item) => (
                       <AppSidebarMenuItem key={item.title}>
-                        {item.href ? (
-                          <AppSidebarMenuButton
-                            asChild
-                            isActive={item.isActive}
-                            tooltip={item.title}
-                          >
-                            <Link href={item.href}>
-                              <item.icon />
-                              <span>{item.title}</span>
-                            </Link>
-                          </AppSidebarMenuButton>
-                        ) : (
-                          <AppSidebarMenuButton
-                            isActive={item.isActive}
-                            tooltip={item.title}
-                          >
-                            <item.icon />
-                            <span>{item.title}</span>
-                          </AppSidebarMenuButton>
-                        )}
+                        <AppSidebarMenuButton
+                          isActive={item.isActive}
+                          tooltip={item.title}
+                        >
+                          <item.icon />
+                          <span>{item.title}</span>
+                        </AppSidebarMenuButton>
                       </AppSidebarMenuItem>
                     ))}
                   </AppSidebarMenu>
