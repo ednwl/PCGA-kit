@@ -1,9 +1,22 @@
 import type { Metadata } from "next";
+import { Inter, Lato } from "next/font/google";
+import { AppThemeProvider } from "@/components/primitives/AppThemeProvider";
 import "./globals.css";
 
+const fontSans = Lato({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-sans",
+});
+
+const fontSerif = Inter({
+  subsets: ["latin"],
+  variable: "--font-serif",
+});
+
 export const metadata: Metadata = {
-  title: "Viana Kit",
-  description: "Built with Viana Kit — the AI-native design system.",
+  title: "PCGA Kit",
+  description: "Built with PCGA Kit",
 };
 
 export default function RootLayout({
@@ -11,8 +24,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="h-full">
-      <body className="min-h-full bg-background text-foreground antialiased">
-        {children}
+      <body
+        className={`${fontSans.variable} ${fontSerif.variable} min-h-full bg-background text-foreground antialiased`}
+      >
+        <AppThemeProvider>{children}</AppThemeProvider>
       </body>
     </html>
   );
